@@ -45,8 +45,8 @@ export interface ColorTypes {
 }
 
 interface PropsTypes {
-  nbPlayer: number;
-  countDownSeconds: number;
+  nbPlayer?: number;
+  countDownSeconds?: number;
 }
 
 const colors = [
