@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 
 // Styles
 import styled from "styled-components";
@@ -39,6 +39,11 @@ const StartButton = styled.button`
   }
 `;
 
+export interface ColorTypes {
+  name: string;
+  hex: string;
+}
+
 interface PropsTypes {
   nbPlayer: number;
   countDownSeconds: number;
@@ -54,19 +59,41 @@ const colors = [
 ];
 
 export default function Stroop({
-  nbPlayer = 5,
+  nbPlayer = 6,
   countDownSeconds = 3,
 }: PropsTypes) {
   const [isReady, setIsReady] = useState(false);
+  const [randomColor, setRandomColor] = useState<ColorTypes>({
+    name: "",
+    hex: "",
+  });
+
   const colorSelected = colors.slice(0, nbPlayer);
+
+  const getRandomColor = useCallback(() => {
+    // get random idx for the name of the color (to trick the player)
+    const nameRandomIdx = Math.floor(Math.random() * colors.length);
+    // get random idx for the hex value of the color
+    const hexRandomIdx = Math.floor(Math.random() * colors.length);
+    const randomColor = {
+      name: colors[nameRandomIdx].name,
+      hex: colors[hexRandomIdx].hex,
+    };
+    return randomColor;
+  }, []);
+
+  const launchGame = () => {
+    setIsReady(true);
+    setRandomColor(getRandomColor());
+  };
 
   return (
     <Container>
       {colorSelected.map((color, idx) => (
         <PlayerColor color={color} />
       ))}
-      <Instructions />
-      <StartButton onClick={() => setIsReady(true)}>Start</StartButton>
+      <Instructions isReady={isReady} randomColor={randomColor} />
+      <StartButton onClick={launchGame}>Start</StartButton>
     </Container>
   );
 }

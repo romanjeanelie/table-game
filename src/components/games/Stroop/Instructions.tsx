@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 // Styles
 import styled from "styled-components";
+import { ColorTypes } from ".";
 
 const Container = styled.div`
   grid-column: 2 / span 2;
@@ -17,11 +18,25 @@ const Container = styled.div`
   }
 `;
 
-export default function Instructions() {
+interface PropsTypes {
+  randomColor: ColorTypes;
+  isReady: boolean;
+}
+
+export default function Instructions({
+  randomColor: color,
+  isReady,
+}: PropsTypes) {
   return (
     <Container>
-      <h1>Click on your color.</h1>
-      <p>⚠️ Only the color of the word matters, not the word itself.</p>
+      {!isReady ? (
+        <>
+          <h1>Click on your color.</h1>
+          <p>⚠️ Only the color of the word matters, not the word itself.</p>
+        </>
+      ) : (
+        <>{color.name}</>
+      )}
     </Container>
   );
 }

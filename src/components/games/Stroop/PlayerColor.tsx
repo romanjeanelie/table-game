@@ -2,15 +2,7 @@ import React, { useState } from "react";
 
 // Styles
 import styled from "styled-components";
-
-interface PlayerColorProps {
-  color: Color;
-}
-
-interface Color {
-  name: string;
-  hex: string;
-}
+import { ColorTypes } from ".";
 
 const Container = styled.div`
   width: 100%;
@@ -66,6 +58,10 @@ const Button = styled.button`
     transform: scale(0.9);
   }
 `;
+
+interface PlayerColorProps {
+  color: ColorTypes;
+}
 
 const PlayerColor = ({ color }: PlayerColorProps) => {
   return (
