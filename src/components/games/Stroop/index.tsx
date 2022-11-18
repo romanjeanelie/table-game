@@ -70,11 +70,22 @@ export default function Stroop({
 
   const colorSelected = colors.slice(0, nbPlayer);
 
+  const getRandomNumber = (maxValue: number, notThisOne?: number) => {
+    const randomNumber = Math.floor(Math.random() * maxValue);
+    // I'm gonna use the randomNumber function twice, and if i get both time on the same number it's a shame
+    // So I implement a "notThisOne" prop, in order to avoid the case where we have twice the same number
+    if (randomNumber !== notThisOne || notThisOne === undefined) {
+      return randomNumber;
+    } else {
+      return getRandomNumber(maxValue, notThisOne);
+    }
+  };
+
   const getRandomColor = useCallback(() => {
     // get random idx for the name of the color (to trick the player)
-    const nameRandomIdx = Math.floor(Math.random() * colors.length);
+    const nameRandomIdx = getRandomNumber(colorSelected.length);
     // get random idx for the hex value of the color
-    const hexRandomIdx = Math.floor(Math.random() * colors.length);
+    let hexRandomIdx = getRandomNumber(colorSelected.length, nameRandomIdx);
     const randomColor = {
       name: colors[nameRandomIdx].name,
       hex: colors[hexRandomIdx].hex,
