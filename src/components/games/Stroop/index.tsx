@@ -9,10 +9,13 @@ import PlayerColor from "./PlayerColor";
 
 // TO DO
 // [X] CREATE ARRAY OF COLORS, AND THEIR NAMES;
-// [] SELECT RANDOMLY BOTH A COLOR AND NAME;
+// [X] SELECT RANDOMLY BOTH A COLOR AND NAME;
+// [X] GIVE A COLOR TO EACH PLAYER
+// [X] IN FUNCTION OF THE NUMBER OF PLAYERS, ONLY SHOWCASE CERTAIN COLORS
+// [] MAKE A FUNCTION THAT ENDS THE GAME WHEN A PLAYER HAS CLICKED ON HIS/HER BUTTON
+// [] IF WON THE BORDER ON THE PLAYER IS DISPLAYED + INSTRUCTIONS DISPLAYS "YOU WIN"
+// [] IF LOST THE BORDER ON THE PLAYER IS DISPLAYED + INSTRUCTIONS DISPLAYS "YOU LOSE"
 // [] PERHAPS CREATE DIFFICULTY GAP : 1ST ONLY COLOR, 2ND COLOR AND NAME;
-// [] GIVE A COLOR TO EACH PLAYER
-// [] IN FUNCTION OF THE NUMBER OF PLAYERS, ONLY SHOWCASE CERTAIN COLORS
 
 const Container = styled.div`
   background-color: #232222;
@@ -70,10 +73,10 @@ export default function Stroop({
 
   const colorSelected = colors.slice(0, nbPlayer);
 
+  // I'm gonna use the randomNumber function twice, and if i get both time on the same number it's a shame
+  // So I implement a "notThisOne" prop, in order to avoid the case where we have twice the same number
   const getRandomNumber = (maxValue: number, notThisOne?: number) => {
     const randomNumber = Math.floor(Math.random() * maxValue);
-    // I'm gonna use the randomNumber function twice, and if i get both time on the same number it's a shame
-    // So I implement a "notThisOne" prop, in order to avoid the case where we have twice the same number
     if (randomNumber !== notThisOne || notThisOne === undefined) {
       return randomNumber;
     } else {
