@@ -2,6 +2,9 @@ import React, { useState } from "react";
 
 // Styles
 import styled from "styled-components";
+
+// Components
+import Instructions from "./Instructions";
 import PlayerColor from "./PlayerColor";
 
 // TO DO
@@ -27,15 +30,6 @@ const Container = styled.div`
   }
 `;
 
-const Instructions = styled.div`
-  grid-column: 2 / span 2;
-  grid-row: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
 const StartButton = styled.button`
   padding: 6px 8px;
   border: 1px solid gray;
@@ -46,7 +40,7 @@ const StartButton = styled.button`
 `;
 
 interface PropsTypes {
-  npPlayer: number;
+  nbPlayer: number;
 }
 
 const colors = [
@@ -58,8 +52,7 @@ const colors = [
   { name: "violet", hex: "#C515E1" },
 ];
 
-export default function Stroop() {
-  const nbPlayer = 6;
+export default function Stroop({ nbPlayer = 6 }: PropsTypes) {
   const countDownSeconds = 3;
   const [isReady, setIsReady] = useState(false);
   const [isEnded, setIsEnded] = useState(false);
@@ -69,6 +62,8 @@ export default function Stroop() {
       {colors.map((color, idx) => (
         <PlayerColor color={color} />
       ))}
+      <Instructions />
+      <StartButton onClick={() => setIsReady(true)}>Start</StartButton>
     </Container>
   );
 }

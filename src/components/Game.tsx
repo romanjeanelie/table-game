@@ -1,6 +1,6 @@
 import React from "react";
 import FillGlass from "./games/FillGlass";
-import Stroop from "./games/Stroop"
+import Stroop from "./games/Stroop";
 
 import styled from "styled-components";
 
@@ -12,8 +12,8 @@ const Container = styled.div`
 const Game = () => {
   return (
     <Container>
-      {/* <FillGlass /> */}
       <Stroop />
+      <FillGlass />
     </Container>
   );
 };
