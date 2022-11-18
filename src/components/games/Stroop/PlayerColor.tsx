@@ -22,28 +22,28 @@ const Container = styled.div`
 
   // Positionning each player
   &:nth-of-type(1) {
-    grid-row: 1;
-    grid-column-start: 2;
-  }
-  &:nth-of-type(2) {
-    grid-row: 1;
-    grid-column-start: 3;
-  }
-  &:nth-of-type(3) {
     grid-row: 2;
     grid-column-start: 1;
   }
-  &:nth-of-type(4) {
-    grid-row: 2;
-    grid-column-start: 4;
+  &:nth-of-type(2) {
+    grid-row: 1;
+    grid-column-start: 2;
   }
-  &:nth-of-type(5) {
+  &:nth-of-type(3) {
+    grid-row: 1;
+    grid-column-start: 3;
+  }
+  &:nth-of-type(4) {
     grid-row: 3;
     grid-column-start: 2;
   }
-  &:nth-of-type(6) {
+  &:nth-of-type(5) {
     grid-row: 3;
     grid-column-start: 3;
+  }
+  &:nth-of-type(6) {
+    grid-row: 2;
+    grid-column-start: 4;
   }
 `;
 

@@ -41,6 +41,7 @@ const StartButton = styled.button`
 
 interface PropsTypes {
   nbPlayer: number;
+  countDownSeconds: number;
 }
 
 const colors = [
@@ -52,14 +53,16 @@ const colors = [
   { name: "violet", hex: "#C515E1" },
 ];
 
-export default function Stroop({ nbPlayer = 6 }: PropsTypes) {
-  const countDownSeconds = 3;
+export default function Stroop({
+  nbPlayer = 5,
+  countDownSeconds = 3,
+}: PropsTypes) {
   const [isReady, setIsReady] = useState(false);
-  const [isEnded, setIsEnded] = useState(false);
+  const colorSelected = colors.slice(0, nbPlayer);
 
   return (
     <Container>
-      {colors.map((color, idx) => (
+      {colorSelected.map((color, idx) => (
         <PlayerColor color={color} />
       ))}
       <Instructions />
