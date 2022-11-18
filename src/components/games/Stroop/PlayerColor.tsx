@@ -62,14 +62,14 @@ const Button = styled.button`
 interface PlayerColorProps {
   color: ColorTypes;
   randomColor: string;
-  finishGame: (playerInput: string, randomColor: string) => void;
+  playGame: (playerInput: string, randomColor: string) => void;
 }
 
-const PlayerColor = ({ color, randomColor, finishGame }: PlayerColorProps) => {
+const PlayerColor = ({ color, randomColor, playGame }: PlayerColorProps) => {
   return (
     <Container>
       <Color color={color.hex} />
-      <Button onClick={() => finishGame(color.hex, randomColor)}>
+      <Button onClick={() => playGame(color.hex, randomColor)}>
         It's me !
       </Button>
     </Container>

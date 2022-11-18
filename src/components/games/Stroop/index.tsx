@@ -101,7 +101,7 @@ export default function Stroop({
     setRandomColor(getRandomColor());
   };
 
-  const finishGame = (playerInput: string, randomColor: string): void => {
+  const playGame = (playerInput: string, randomColor: string): void => {
     if (!isReady) return;
     playerInput === randomColor ? setResult("win") : setResult("loose");
     launchGame();
@@ -113,10 +113,14 @@ export default function Stroop({
         <PlayerColor
           color={color}
           randomColor={randomColor.hex}
-          finishGame={finishGame}
+          playGame={playGame}
         />
       ))}
-      <Instructions isReady={isReady} randomColor={randomColor} />
+      <Instructions
+        result={result}
+        isReady={isReady}
+        randomColor={randomColor}
+      />
       <StartButton onClick={launchGame}>Start</StartButton>
     </Container>
   );
