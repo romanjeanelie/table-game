@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
 // Styles
 import styled from "styled-components";
+import PlayerColor from "./PlayerColor";
 
 // TO DO
-// [] CREATE ARRAY OF COLORS, AND THEIR NAMES;
+// [X] CREATE ARRAY OF COLORS, AND THEIR NAMES;
 // [] SELECT RANDOMLY BOTH A COLOR AND NAME;
 // [] PERHAPS CREATE DIFFICULTY GAP : 1ST ONLY COLOR, 2ND COLOR AND NAME;
 // [] GIVE A COLOR TO EACH PLAYER
@@ -17,13 +18,12 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  background-color: ${({ color }) => color};
 
   & > div:nth-child(1),
   & > div:nth-child(4),
   & > div:nth-child(7),
   & > div:nth-child(10) {
-    opacity: 0;
+    opacity: 1;
   }
 `;
 
@@ -50,14 +50,25 @@ interface PropsTypes {
 }
 
 const colors = [
-  { name: "red", color: "#F91A1A" },
-  { name: "yellow", color: "#FDBB5A" },
-  { name: "blue", color: "#FDBB5A" },
+  { name: "red", hex: "#F91A1A" },
+  { name: "yellow", hex: "#FDBB5A" },
+  { name: "blue", hex: "#63A0E8" },
+  { name: "green", hex: "#86D09B" },
+  { name: "orange", hex: "#E16B15" },
+  { name: "violet", hex: "#C515E1" },
 ];
 
 export default function Stroop() {
   const nbPlayer = 6;
   const countDownSeconds = 3;
+  const [isReady, setIsReady] = useState(false);
+  const [isEnded, setIsEnded] = useState(false);
 
-  return <div>index</div>;
+  return (
+    <Container>
+      {colors.map((color, idx) => (
+        <PlayerColor color={color} />
+      ))}
+    </Container>
+  );
 }
