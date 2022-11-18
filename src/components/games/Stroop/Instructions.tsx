@@ -23,10 +23,7 @@ interface PropsTypes {
   isReady: boolean;
 }
 
-export default function Instructions({
-  randomColor: color,
-  isReady,
-}: PropsTypes) {
+export default function Instructions({ randomColor, isReady }: PropsTypes) {
   return (
     <Container>
       {!isReady ? (
@@ -35,7 +32,7 @@ export default function Instructions({
           <p>⚠️ Only the color of the word matters, not the word itself.</p>
         </>
       ) : (
-        <>{color.name}</>
+        <h1 style={{ color: `${randomColor.hex}` }}>{randomColor.name}</h1>
       )}
     </Container>
   );
