@@ -66,11 +66,11 @@ export default function Stroop({
   countDownSeconds = 3,
 }: PropsTypes) {
   const [isReady, setIsReady] = useState(false);
+  const [result, setResult] = useState("");
   const [randomColor, setRandomColor] = useState<ColorTypes>({
     name: "",
     hex: "",
   });
-
   const colorSelected = colors.slice(0, nbPlayer);
 
   // I'm gonna use the randomNumber function twice, and if i get both time on the same number it's a shame
@@ -101,10 +101,20 @@ export default function Stroop({
     setRandomColor(getRandomColor());
   };
 
+  const finishGame = (playerInput: string, randomColor: string): void => {
+    if (!isReady) return;
+    playerInput === randomColor ? setResult("win") : setResult("loose");
+    launchGame();
+  };
+
   return (
     <Container>
       {colorSelected.map((color, idx) => (
-        <PlayerColor color={color} />
+        <PlayerColor
+          color={color}
+          randomColor={randomColor.hex}
+          finishGame={finishGame}
+        />
       ))}
       <Instructions isReady={isReady} randomColor={randomColor} />
       <StartButton onClick={launchGame}>Start</StartButton>

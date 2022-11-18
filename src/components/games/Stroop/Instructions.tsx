@@ -19,11 +19,12 @@ const Container = styled.div`
 `;
 
 interface PropsTypes {
-  randomColor: ColorTypes;
+  result: string;
   isReady: boolean;
+  randomColor: ColorTypes;
 }
 
-export default function Instructions({ randomColor, isReady }: PropsTypes) {
+export default function Instructions({ isReady, randomColor }: PropsTypes) {
   return (
     <Container>
       {!isReady ? (
