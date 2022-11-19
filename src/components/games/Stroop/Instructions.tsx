@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 // Styles
 import styled from "styled-components";
-import { ColorTypes } from ".";
+import { ColorTypes, ResultTypes } from ".";
 
 const Container = styled.div`
   grid-column: 2 / span 2;
@@ -19,12 +19,16 @@ const Container = styled.div`
 `;
 
 interface PropsTypes {
-  result: string;
+  result?: ResultTypes;
   isReady: boolean;
   randomColor: ColorTypes;
 }
 
-export default function Instructions({ isReady, randomColor }: PropsTypes) {
+export default function Instructions({
+  result,
+  isReady,
+  randomColor,
+}: PropsTypes) {
   return (
     <Container>
       {!isReady ? (
@@ -32,8 +36,13 @@ export default function Instructions({ isReady, randomColor }: PropsTypes) {
           <h1>Click on your color.</h1>
           <p>⚠️ Only the color of the word matters, not the word itself.</p>
         </>
-      ) : (
+      ) : !result ? (
         <h1 style={{ color: `${randomColor.hex}` }}>{randomColor.name}</h1>
+      ) : (
+        <>
+          <h1 style={{ color: `${randomColor.hex}` }}>{randomColor.name}</h1>
+          {result.message}
+        </>
       )}
     </Container>
   );

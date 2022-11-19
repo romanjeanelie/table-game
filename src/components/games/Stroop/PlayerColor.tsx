@@ -4,13 +4,20 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { ColorTypes } from ".";
 
-const Container = styled.div`
+interface ContainerProps {
+  idx: number;
+  playerId?: number;
+}
+
+const Container = styled.div<ContainerProps>`
   width: 100%;
   height: 100%;
   align-items: center;
   justify-content: center;
   display: flex;
   flex-direction: column;
+  border: ${(props) =>
+    props.idx === props.playerId && "1px solid palevioletred"};
 
   // Positionning each player
   &:nth-of-type(1) {
@@ -60,16 +67,28 @@ const Button = styled.button`
 `;
 
 interface PlayerColorProps {
+  idx: number;
   color: ColorTypes;
   randomColor: string;
-  playGame: (playerInput: string, randomColor: string) => void;
+  playerId?: number;
+  playGame: (
+    playerInput: string,
+    randomColor: string,
+    playerId: number
+  ) => void;
 }
 
-const PlayerColor = ({ color, randomColor, playGame }: PlayerColorProps) => {
+const PlayerColor = ({
+  idx,
+  color,
+  randomColor,
+  playerId,
+  playGame,
+}: PlayerColorProps) => {
   return (
-    <Container>
+    <Container idx={idx} playerId={playerId}>
       <Color color={color.hex} />
-      <Button onClick={() => playGame(color.hex, randomColor)}>
+      <Button onClick={() => playGame(color.hex, randomColor, idx)}>
         It's me !
       </Button>
     </Container>

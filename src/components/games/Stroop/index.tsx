@@ -47,6 +47,11 @@ export interface ColorTypes {
   hex: string;
 }
 
+export interface ResultTypes {
+  message: string;
+  playerId: number;
+}
+
 interface PropsTypes {
   nbPlayer?: number;
   countDownSeconds?: number;
@@ -66,7 +71,7 @@ export default function Stroop({
   countDownSeconds = 3,
 }: PropsTypes) {
   const [isReady, setIsReady] = useState(false);
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState<ResultTypes>();
   const [randomColor, setRandomColor] = useState<ColorTypes>({
     name: "",
     hex: "",
@@ -101,9 +106,15 @@ export default function Stroop({
     setRandomColor(getRandomColor());
   };
 
-  const playGame = (playerInput: string, randomColor: string): void => {
+  const playGame = (
+    playerInput: string,
+    randomColor: string,
+    playerId: number
+  ): void => {
     if (!isReady) return;
-    playerInput === randomColor ? setResult("win") : setResult("loose");
+    playerInput === randomColor
+      ? setResult({ message: "win", playerId: playerId })
+      : setResult({ message: "loose", playerId: playerId });
     launchGame();
   };
 
@@ -111,8 +122,11 @@ export default function Stroop({
     <Container>
       {colorSelected.map((color, idx) => (
         <PlayerColor
+          key={idx}
+          idx={idx}
           color={color}
           randomColor={randomColor.hex}
+          playerId={result?.playerId}
           playGame={playGame}
         />
       ))}
