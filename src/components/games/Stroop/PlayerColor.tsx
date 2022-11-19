@@ -16,8 +16,7 @@ const Container = styled.div<ContainerProps>`
   justify-content: center;
   display: flex;
   flex-direction: column;
-  border: ${(props) =>
-    props.idx === props.playerId && "1px solid palevioletred"};
+  border: ${(props) => props.idx === props.playerId && "1px solid red"};
 
   // Positionning each player
   &:nth-of-type(1) {
