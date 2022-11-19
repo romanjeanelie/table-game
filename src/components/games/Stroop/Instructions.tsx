@@ -3,6 +3,7 @@ import React, { useState } from "react";
 // Styles
 import styled from "styled-components";
 import { ColorTypes, ResultTypes } from ".";
+import CountDown from "../../commons/CountDown";
 
 const Container = styled.div`
   grid-column: 2 / span 2;
@@ -19,25 +20,34 @@ const Container = styled.div`
 `;
 
 interface PropsTypes {
-  result?: ResultTypes;
   isReady: boolean;
+  result?: ResultTypes;
   randomColor: ColorTypes;
+  setIsReady: (e: boolean) => void;
 }
 
 export default function Instructions({
   result,
   isReady,
+  setIsReady,
   randomColor,
 }: PropsTypes) {
   return (
     <Container>
       {!isReady ? (
         <>
-          <h1>Click on your color.</h1>
+          <h1>Click on your color</h1>
           <p>⚠️ Only the color of the word matters, not the word itself.</p>
         </>
       ) : !result ? (
-        <h1 style={{ color: `${randomColor.hex}` }}>{randomColor.name}</h1>
+        <>
+          <h1 style={{ color: `${randomColor.hex}` }}>{randomColor.name}</h1>
+          <CountDown
+            start={3}
+            isLaunched={isReady}
+            onEnd={() => setIsReady(false)}
+          />
+        </>
       ) : (
         <>
           <h1 style={{ color: `${randomColor.hex}` }}>{randomColor.name}</h1>

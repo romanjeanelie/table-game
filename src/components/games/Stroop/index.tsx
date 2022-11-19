@@ -2,10 +2,10 @@ import React, { useCallback, useState } from "react";
 
 // Styles
 import styled from "styled-components";
-
 // Components
 import Instructions from "./Instructions";
 import PlayerColor from "./PlayerColor";
+import CountDown from "../../commons/CountDown";
 
 // TO DO
 // [X] CREATE ARRAY OF COLORS, AND THEIR NAMES;
@@ -49,8 +49,8 @@ export interface ColorTypes {
 }
 
 export interface ResultTypes {
-  message: string;
-  playerId: number;
+  message?: string;
+  playerId?: number;
 }
 
 interface PropsTypes {
@@ -108,7 +108,7 @@ export default function Stroop({
   };
 
   const stopGame = () => {
-    setResult({ message: "", playerId: undefined });
+    setResult({ message: undefined, playerId: undefined });
     setIsReady(false);
   };
 
@@ -139,6 +139,7 @@ export default function Stroop({
       <Instructions
         result={result}
         isReady={isReady}
+        setIsReady={setIsReady}
         randomColor={randomColor}
       />
       {isReady ? (
