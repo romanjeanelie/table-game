@@ -12,9 +12,10 @@ import PlayerColor from "./PlayerColor";
 // [X] SELECT RANDOMLY BOTH A COLOR AND NAME;
 // [X] GIVE A COLOR TO EACH PLAYER
 // [X] IN FUNCTION OF THE NUMBER OF PLAYERS, ONLY SHOWCASE CERTAIN COLORS
-// [] MAKE A FUNCTION THAT ENDS THE GAME WHEN A PLAYER HAS CLICKED ON HIS/HER BUTTON
-// [] IF WON THE BORDER ON THE PLAYER IS DISPLAYED + INSTRUCTIONS DISPLAYS "YOU WIN"
-// [] IF LOST THE BORDER ON THE PLAYER IS DISPLAYED + INSTRUCTIONS DISPLAYS "YOU LOSE"
+// [X] MAKE A FUNCTION THAT ENDS THE GAME WHEN A PLAYER HAS CLICKED ON HIS/HER BUTTON
+// [X] IF WON THE BORDER ON THE PLAYER IS DISPLAYED + INSTRUCTIONS DISPLAYS "YOU WIN"
+// [X] IF LOST THE BORDER ON THE PLAYER IS DISPLAYED + INSTRUCTIONS DISPLAYS "YOU LOSE"
+// [] SET A COUNTDOWN TO PLAY
 // [] PERHAPS CREATE DIFFICULTY GAP : 1ST ONLY COLOR, 2ND COLOR AND NAME;
 
 const Container = styled.div`
@@ -33,7 +34,7 @@ const Container = styled.div`
   }
 `;
 
-const StartButton = styled.button`
+const Button = styled.button`
   padding: 6px 8px;
   border: 1px solid gray;
 
@@ -106,6 +107,11 @@ export default function Stroop({
     setRandomColor(getRandomColor());
   };
 
+  const stopGame = () => {
+    setResult({ message: "", playerId: undefined });
+    setIsReady(false);
+  };
+
   const playGame = (
     playerInput: string,
     randomColor: string,
@@ -135,7 +141,11 @@ export default function Stroop({
         isReady={isReady}
         randomColor={randomColor}
       />
-      <StartButton onClick={launchGame}>Start</StartButton>
+      {isReady ? (
+        <Button onClick={stopGame}> Stop </Button>
+      ) : (
+        <Button onClick={launchGame}>Start</Button>
+      )}
     </Container>
   );
 }
