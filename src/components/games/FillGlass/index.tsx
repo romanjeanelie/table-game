@@ -1,8 +1,13 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 
+// Store
+import { useStore } from "@/store";
+import { useStoreGlasses } from "./store";
+
 // Components
+import Instructions from "./Instructions";
 import Glass from "./Glass";
-import CountDown from "../../commons/CountDown";
+// import CountDown from "@/components/commons/CountDown";
 
 // Styles
 import styled from "styled-components";
@@ -12,70 +17,38 @@ const Container = styled.div`
   background-color: #232222;
   width: 100%;
   height: 100%;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  background-color: ${({ color }) => color};
-
-  & > div:nth-child(1),
-  & > div:nth-child(4),
-  & > div:nth-child(7),
-  & > div:nth-child(10) {
-    opacity: 0;
-  }
-`;
-
-const Instructions = styled.div`
-  grid-column: 2 / span 2;
-  grid-row: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 `;
 
 const StartButton = styled.button`
   padding: 6px 8px;
   border: 1px solid gray;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 
   &:active {
     background-color: darkgray;
   }
 `;
 
-interface PropsTypes {
-  nbGlasses: number;
-}
-
 const FillGlass = () => {
+  // Store
+  const { players } = useStore();
+  const { setTargetWeight } = useStoreGlasses();
+
   // Config
-  const nbPlayers = 6;
   const countDownSeconds = 10;
 
-  const [isReady, setIsReady] = useState(false);
-  const [isEnded, setIsEnded] = useState(false);
-  const [glassesOnTable, setGlassesOnTable] = useState(0);
-  const [weightTarget, setWeightTarget] = useState(0);
-  const [instructions, setInstructions] = useState("");
-  const [launchCountDown, setLaunchCountDown] = useState(false);
-
   // Refs
+  const countDownRef = useRef<any>();
   const instructionsRef = useRef<any>();
 
   useEffect(() => {
     playInstructions();
   }, []);
 
-  useEffect(() => {
-    if (glassesOnTable === nbPlayers) setIsReady(true);
-  }, [glassesOnTable]);
-
-  useEffect(() => {
-    if (isReady) launchGame();
-  }, [isReady]);
-
   const playInstructions = () => {
-    setInstructions("posez votre verre");
+    // setInstructions("posez votre verre");
   };
 
   const getRandomValue = useCallback(({ min, max, interval }) => {
@@ -84,14 +57,14 @@ const FillGlass = () => {
 
   const launchGame = () => {
     const weight = getRandomValue({ min: 0.1, max: 2, interval: 0.1 });
-    setWeightTarget(weight);
-    setLaunchCountDown(true);
+    setTargetWeight(weight);
+    // setLaunchCountDown(true);
 
     // Anim
     const tl = gsap.timeline();
     tl.to(instructionsRef.current, {
       opacity: 0,
-      onComplete: (): any => setInstructions(`poids: ${weight}g`),
+      // onComplete: (): any => setInstructions(`poids: ${weight}g`),
     });
 
     tl.to(instructionsRef.current, {
@@ -99,24 +72,16 @@ const FillGlass = () => {
     });
   };
 
-  const onGameEnd = useCallback(() => {
-    setIsEnded(true);
-  }, []);
-
-  const onGlassSet = useCallback(() => {
-    setGlassesOnTable((prev) => prev + 1);
-  }, []);
+  const onGameEnd = useCallback(() => {}, []);
 
   return (
     <Container>
-      {Array.from({ length: 10 }).map((_, i) => (
-        <Glass key={i} onGlassSet={onGlassSet} weightTarget={weightTarget} isReady={isReady} isEnded={isEnded} />
+      {players.map((player, i) => (
+        <Glass key={player.key} player={player} />
       ))}
-      <Instructions ref={instructionsRef}>
-        {instructions}
-        <CountDown isLaunched={launchCountDown} onEnd={onGameEnd} />
-      </Instructions>
-      <StartButton onClick={() => setIsReady(true)}>Start</StartButton>
+      <Instructions />
+
+      <StartButton onClick={launchGame}>Start</StartButton>
     </Container>
   );
 };

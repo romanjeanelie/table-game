@@ -43,7 +43,7 @@ export default function Instructions({
         <>
           <h1 style={{ color: `${randomColor.hex}` }}>{randomColor.name}</h1>
           <CountDown
-            start={3}
+            startAt={3}
             isLaunched={isReady}
             onEnd={() => setIsReady(false)}
           />

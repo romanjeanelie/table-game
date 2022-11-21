@@ -1,17 +1,24 @@
 import React, { useCallback, useEffect, useState, useRef } from "react";
 
+// Store
+import { useStoreGlasses } from "./store";
+
+// Styles
 import styled from "styled-components";
+import { PlayerProps } from "@/components/Player";
+import { PlayerContainer } from "@/components/Player";
 
 const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  justify-self: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -50px;
+  width: 100px;
+  height: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  border: 1px solid red;
 `;
 
 const GlassEl = styled.button`
@@ -20,7 +27,6 @@ const GlassEl = styled.button`
   width: 40px;
   height: 80px;
   border-top: transparent;
-
   opacity: 0;
 `;
 
@@ -49,7 +55,11 @@ const Controls = styled.div`
   }
 `;
 
-const Glass = ({ onGlassSet, weightTarget, isReady, isEnded }) => {
+const Glass = ({ player }) => {
+  // Store
+  const { targetWeight } = useStoreGlasses();
+
+  // Config
   const [currentWeight, setCurrentWeight] = useState<number>(0.1);
   const tempWeight: number = 0.1;
 
@@ -58,43 +68,42 @@ const Glass = ({ onGlassSet, weightTarget, isReady, isEnded }) => {
   const liquidRef = useRef<any>();
 
   useEffect(() => {
-    if (weightTarget === 0) return;
-    console.log({ weightTarget });
+    if (targetWeight === 0) return;
+    console.log({ targetWeight });
 
     // updateLiquidLevel();
-  }, [currentWeight, weightTarget]);
+  }, [currentWeight, targetWeight]);
 
   const moreWeight = useCallback(() => {
     const newWeight: number = currentWeight + tempWeight;
     setCurrentWeight(Number(newWeight.toFixed(2)));
   }, [currentWeight]);
+
   const lessWeight = useCallback(() => {
     const newWeight: number = currentWeight - tempWeight;
     setCurrentWeight(Number(newWeight.toFixed(2)));
   }, [currentWeight]);
 
   const updateLiquidLevel = useCallback(() => {
-    const levelRatio = currentWeight / weightTarget;
-    console.log({ currentWeight, weightTarget, levelRatio });
+    const levelRatio = currentWeight / targetWeight;
+    console.log({ currentWeight, targetWeight, levelRatio });
 
     liquidRef.current.style.transform = `scaleY(${levelRatio})`;
   }, []);
 
-  const handleGlassClick = () => {
-    glassRef.current.style.borderColor = "red";
-    onGlassSet();
-  };
   return (
-    <Container>
-      <GlassEl ref={glassRef} onClick={handleGlassClick}>
-        <Liquid ref={liquidRef} />
-      </GlassEl>
-      <Weight>{currentWeight}</Weight>
-      <Controls>
-        <button onClick={moreWeight}>+</button>
-        <button onClick={lessWeight}>-</button>
-      </Controls>
-    </Container>
+    <PlayerContainer player={player}>
+      <Container>
+        <GlassEl ref={glassRef}>
+          <Liquid ref={liquidRef} />
+        </GlassEl>
+        <Weight>{currentWeight}</Weight>
+        <Controls>
+          <button onClick={lessWeight}>-</button>
+          <button onClick={moreWeight}>+</button>
+        </Controls>
+      </Container>
+    </PlayerContainer>
   );
 };
 
