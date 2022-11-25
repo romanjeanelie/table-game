@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 
 // Styles
 import styled from "styled-components";
 import { ColorTypes, ResultTypes } from ".";
-import CountDown from "../../commons/CountDown";
 
 const Container = styled.div`
   grid-column: 2 / span 2;

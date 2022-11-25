@@ -5,7 +5,6 @@ import styled from "styled-components";
 // Components
 import Instructions from "./Instructions";
 import PlayerColor from "./PlayerColor";
-import CountDown from "../../commons/CountDown";
 
 // TO DO
 // [X] CREATE ARRAY OF COLORS, AND THEIR NAMES;
