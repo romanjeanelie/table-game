@@ -3,6 +3,8 @@
     "esModuleInterop": true,
     "paths": {
       "@/*": ["./src/*"]
-    }
-  }
+    },
+    "jsx": "react-jsx"
+  },
+  "include": ["src/**/*"]
 }
