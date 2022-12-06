@@ -89,7 +89,7 @@ const Player = ({ player }) => {
     if (player.isRegistered) {
       console.log(`player ${player.key} added`);
       gsap.to(markerRef.current, {
-        backgroundColor: "red",
+        backgroundColor: "#8b5f20",
         scale: 1,
       });
     }
