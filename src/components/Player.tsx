@@ -64,7 +64,11 @@ export const PlayerContainer = ({ player, children }) => {
     }
   };
   return (
-    <Container direction={getDirection()} positionX={player.position.x} positionY={player.position.y}>
+    <Container
+      direction={getDirection()}
+      positionX={player.position.x}
+      positionY={player.position.y}
+    >
       {children}
     </Container>
   );

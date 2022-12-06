@@ -33,7 +33,9 @@ const StartButton = styled.button`
 
 const FillGlass = () => {
   // Store
-  const { players } = useStore();
+  const { players, getRegisteredPlayers } = useStore();
+  const playersRegisters = getRegisteredPlayers();
+
   const { setTargetWeight } = useStoreGlasses();
 
   // Config

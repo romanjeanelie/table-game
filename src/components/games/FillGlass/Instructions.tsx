@@ -1,11 +1,13 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
+
+// Hook
+import useTimelineComponents from "@/hooks/useTimelineComponents";
 
 // Store
 import { useStoreGlasses, instructions } from "./store";
 
 // Styles
 import styled from "styled-components";
-import CountDown from "@/components/commons/CountDown";
 
 const Container = styled.div`
   position: absolute;
@@ -21,47 +23,34 @@ const Container = styled.div`
 `;
 
 const Instructions = () => {
+  const [glassesFilled, setGlassesFilled] = useState(false);
+
+  const { currentId, component } = useTimelineComponents([
+    {
+      id: 0,
+      component: "Posez votre verre",
+      duration: 2,
+    },
+    {
+      id: 1,
+      component: "Remplisser votre verre",
+      triggerComplete: glassesFilled,
+    },
+    {
+      id: 2,
+      component: "Résultats",
+    },
+  ]);
+
   // Store
   const { currentInstruction, setCurrentInstruction } = useStoreGlasses();
 
-  // Refs
-  const countDownPose = useRef<any>();
-
-  useEffect(() => {
-    if (!countDownPose.current) return;
-    countDownPose.current.start();
-  }, [currentInstruction]);
-
-  const Instruction = () => {
-    switch (currentInstruction) {
-      case "poseVerre":
-        return (
-          <>
-            <p>posez votre verre</p>
-            <CountDown
-              ref={countDownPose}
-              startAt={4}
-              //   hidden={true}
-              onEnd={() => setCurrentInstruction(instructions[1])}
-            />
-          </>
-        );
-      case "rempliVerre":
-        return (
-          <>
-            <p>Remplissez votre verre</p>
-            <CountDown
-              startAt={4}
-              hidden={true}
-              onEnd={() => setCurrentInstruction(instructions[2])}
-            />
-          </>
-        );
-    }
-  };
   return (
     <Container>
-      <Instruction />
+      {component}
+      {currentId === 1 && (
+        <button onClick={() => setGlassesFilled(true)}>isFilled</button>
+      )}
     </Container>
   );
 };
