@@ -1,10 +1,7 @@
-import React, { useRef, useEffect, useState } from "react";
+import { useState } from "react";
 
 // Hook
 import useTimelineComponents from "@/hooks/useTimelineComponents";
-
-// Store
-import { useStoreGlasses, instructions } from "./store";
 
 // Styles
 import styled from "styled-components";
@@ -22,7 +19,7 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const Instructions = () => {
+const Gameplay = () => {
   const [glassesFilled, setGlassesFilled] = useState(false);
 
   const { currentId, component } = useTimelineComponents([
@@ -42,9 +39,6 @@ const Instructions = () => {
     },
   ]);
 
-  // Store
-  const { currentInstruction, setCurrentInstruction } = useStoreGlasses();
-
   return (
     <Container>
       {component}
@@ -55,4 +49,4 @@ const Instructions = () => {
   );
 };
 
-export default Instructions;
+export default Gameplay;
