@@ -30,14 +30,13 @@ const StartButton = styled.button`
   }
 `;
 
-const getRandomValue = useCallback(({ min, max, interval }) => {
+const getRandomValue = ({ min, max, interval }) => {
   return gsap.utils.random(min, max, interval);
-}, []);
+};
 
 const FillGlass = () => {
   // Store
   const { players, getRegisteredPlayers } = useStore();
-
   const { setTargetWeight } = useStoreGlasses();
 
   const launchGame = () => {
